@@ -3,37 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicación de Notas</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./style/style-notas.css">
+    <title>Notes App</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center text-primary mb-4">Aplicación de Notas</h1>
+    <div class="container mt-4">
+        <h1 class="text-center">Notes App</h1>
         
+        <!-- Note input section -->
         <div class="form-group">
-            <input type="text" id="searchInput" class="form-control" placeholder="Buscar notas...">
+            <input type="text" id="noteTitle" class="form-control" placeholder="Enter note title">
         </div>
+        <div class="form-group">
+            <textarea id="noteText" class="form-control" placeholder="Enter note text"></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="addNote()">Add Note</button>
+        <button class="btn btn-secondary" onclick="clearFields()">Clear Fields</button>
 
-        <div class="note-editor p-3 mb-4">
-            <div class="form-group">
-                <input type="text" id="titleInput" class="form-control" placeholder="Título de la nota">
+        <!-- Filters section -->
+        <div class="mt-4">
+            <h4>Filters</h4>
+            <input type="text" id="filterText" class="form-control" placeholder="Search notes" onkeyup="applyFilters()">
+            <div class="form-check mt-2">
+                <input type="checkbox" id="filterCompleted" class="form-check-input" onchange="applyFilters()">
+                <label for="filterCompleted" class="form-check-label">Show only completed notes</label>
             </div>
-            <div class="form-group">
-                <textarea id="contentInput" class="form-control" rows="4" placeholder="Escribe tu nota aquí..."></textarea>
-            </div>
-            <button id="saveButton" class="btn btn-success">Guardar</button>
-            <button id="deleteButton" class="btn btn-danger">Borrar</button>
         </div>
 
-        <div id="card-contenedor" class="d-flex flex-wrap justify-content-center gap-5 py-3">
-
-        </div>
+        <!-- Notes container -->
+        <div class="mt-4" id="notesContainer"></div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="./java/main-Notas.js"></script>
 </body>
 </html>

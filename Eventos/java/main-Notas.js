@@ -1,50 +1,106 @@
-const notas = [
+let notes = [
     {
         id: 1,
-        titulo: 'Tender la cama',
-        texto: 'Por las mañanas realizar esto a las 7am',
-        realizado: true
+        title: 'Tender la cama',
+        text: 'Por las mañanas realizar esto a las 7am',
+        completed: true
     },
     {
         id: 2,
-        titulo: 'Ir al gimnasio',
-        texto: 'Por las tardes esto a las 7pm',
-        realizado: false
+        title: 'Ir al gimnasio',
+        text: 'Por las tardes esto a las 7pm',
+        completed: false
     },
     {
         id: 3,
-        titulo: 'Salir a ver una pelicula',
-        texto: 'Ir en la semana a ver una pelicula solo ',
-        realizado: true
+        title: 'Salir a ver una pelicula',
+        text: 'Ir en la semana a ver una pelicula solo',
+        completed: true
     }
-]
+];
 
 
-let idGlobal = notas.length - 1
+let globalId = 3;
 
-let contenedor = document.getElementById("card-contenedor");
 
-function pintarCard() {
-    
-    for (let index = 0; index < notas.length; index++) {
+function renderNotes(notesToDisplay) {
+    const container = document.getElementById('notesContainer');
+    container.innerHTML = '';
 
-        let card = document.createElement("article");
-        card.classList.add("card", "bg-dark", "text-light", "col-10", "col-md-5", "col-xl-3");
-     
-        card.innerHTML = `
-          <div class="card-body">
-            <h5 class="card-title text-center">${notas[index].titulo}</h5>
-            <p class="card-text">${notas[index].texto}</p>
-            <div class="card-footer d-flex justify-content-between align-items-center">
-            <input type="checkbox" ${notas[index].realizado ? 'checked' : ''}> Realizado
+    if (notesToDisplay.length === 0) {
+        container.innerHTML = '<p>No hay notas para mostrar</p>';
+        return;
+    }
+
+    notesToDisplay.forEach(note => {
+        const noteCard = document.createElement('div');
+        noteCard.className = 'card mb-3';
+        noteCard.innerHTML = `
+            <div class="card-body">
+                <h5 class="card-title">${note.title}</h5>
+                <p class="card-text">${note.text}</p>
+                <button class="btn btn-danger" onclick="deleteNote(${note.id})">Borrar Nota</button>
+                <input type="checkbox" onclick="toggleCompleted(${note.id})" ${note.completed ? 'checked' : ''}>
             </div>
-          </div>
         `;
-      contenedor.appendChild(card);
-        
+        container.appendChild(noteCard);
+    });
+}
+
+
+function addNote() {
+    const title = document.getElementById('noteTitle').value.trim();
+    const text = document.getElementById('noteText').value.trim();
+
+    if (title && text) {
+        const newNote = {
+            id: ++globalId,
+            title: title,
+            text: text,
+            completed: false
+        };
+        notes.push(newNote);
+        clearFields();
+        renderNotes(notes);
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    pintarCard();
-});
+
+function clearFields() {
+    document.getElementById('noteTitle').value = '';
+    document.getElementById('noteText').value = '';
+}
+
+
+function deleteNote(id) {
+    notes = notes.filter(note => note.id !== id);
+    renderNotes(notes);
+}
+
+
+function toggleCompleted(id) {
+    notes = notes.map(note => note.id === id ? { ...note, completed: !note.completed } : note);
+    renderNotes(notes);
+}
+
+
+function filterByCompletion(notesArray) {
+    const showCompleted = document.getElementById('filterCompleted').checked;
+    return showCompleted ? notesArray.filter(note => note.completed) : notesArray;
+}
+
+
+function filterByText(notesArray, searchText) {
+    if (!searchText) return notesArray;
+    return notesArray.filter(note => note.title.includes(searchText) || note.text.includes(searchText));
+}
+
+
+function applyFilters() {
+    const searchText = document.getElementById('filterText').value.trim();
+    const filteredNotes = filterByCompletion(filterByText(notes, searchText));
+    renderNotes(filteredNotes);
+}
+
+
+renderNotes(notes);
