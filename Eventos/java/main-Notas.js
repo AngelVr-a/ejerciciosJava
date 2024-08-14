@@ -1,23 +1,26 @@
-let notes = [
-    {
-        id: 1,
-        title: 'Tender la cama',
-        text: 'Por las mañanas realizar esto a las 7am',
-        completed: true
-    },
-    {
-        id: 2,
-        title: 'Ir al gimnasio',
-        text: 'Por las tardes esto a las 7pm',
-        completed: false
-    },
-    {
-        id: 3,
-        title: 'Salir a ver una pelicula',
-        text: 'Ir en la semana a ver una pelicula solo',
-        completed: true
-    }
-];
+let data ={
+    notes : [
+        {
+            id: 1,
+            title: 'Tender la cama',
+            text: 'Por las mañanas realizar esto a las 7am',
+            completed: true
+        },
+        {
+            id: 2,
+            title: 'Ir al gimnasio',
+            text: 'Por las tardes esto a las 7pm',
+            completed: false
+        },
+        {
+            id: 3,
+            title: 'Salir a ver una pelicula',
+            text: 'Ir en la semana a ver una pelicula solo',
+            completed: true
+        }
+    ]
+}
+
 
 
 let globalId = 3;
